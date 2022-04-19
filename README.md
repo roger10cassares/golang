@@ -134,7 +134,7 @@ Transfromando a função em um método (orientado a objetos in the Go way).
 Os métodos do Go são basedos em structs utilizando o type
 
 ```go
-type Carro struct {
+type Carro struct {.+
   Nome string
 }
 
@@ -211,12 +211,135 @@ func main() {
   fmt.Println(a) // 60
 
   // Isso acontece pq a, *b e o *ponteiro estão apontando para o mesmo endereço!
-
-  func abc(a *int) int {
-    
-  }
-
 }
+  
 
 ```
+
+Outro exemplo 
+```go
+
+func main () {
+
+  variavel := 10
+
+  abc(&variavel) // tem que se colocar o endereço da memoria pois a função pede um parâmetro de ponteiro
+
+  fmt.Ptintln(variavel) // 200
+  
+  func abc(a *int) {
+      *a = 200
+    }
+}
+```
+
+Criamos uma função que nao esta retornando nada, mas ela está alterando um valor que foi passado por referencia atraves do ponteiro! Pois o valor que foi passado por parâmetro é um endereçamento de memória. Portanto, uma função que lida com ponteiro também nao precisa ter o return!
+
+
+Outro exemplo com Struct
+```go
+
+type Carro struct {
+  Name string
+}
+
+// a variavel c consegue acessar e instanciar o valor da struct
+func (c Carro) andou() {
+  fmt.Println(c.Name, "andou")
+}
+
+func main () {
+
+  carro := Carro {
+    Name: "Ka"
+  }
+
+  carro.andou() // Ka andou
+
+}
+```
+
+Outro exemplo com Struct
+```go
+
+type Carro struct {
+  Name string
+}
+
+// a variavel c consegue acessar e instanciar o valor da struct
+func (c Carro) andou() {
+  c.Name = "BMW"
+  fmt.Println(c.Name, "andou")
+}
+
+func main () {
+
+  carro := Carro {
+    Name: "Ka"
+  }
+
+  carro.andou() // BMW andou
+  fmt.Println(carro.Name) // Ka
+
+}
+```
+
+
+Outro exemplo com Struct
+```go
+
+type Carro struct {
+  Name string
+}
+
+// a variavel c consegue acessar e instanciar o valor da struct
+func (c Carro) andou() {
+  c.Name = "BMW"
+  fmt.Println(c.Name, "andou")
+}
+
+func main () {
+
+  carro := Carro {
+    Name: "Ka"
+  }
+
+  carro.andou() // BMW andou
+  fmt.Println(carro.Name) // Ka 
+
+  // A função Println apenas retorna o valordas variáveis dentro do escopo da função.
+
+}
+```
+
+Outro exemplo com Struct
+```go
+
+type Carro struct {
+  Name string
+}
+
+// a variavel c consegue acessar e instanciar o valor da struct
+
+// Agora, quando dermos c.Name = "BMW", o valor sera alterado na referencia! Isso vai mudar para o Name que está na Struct!porque acessa o mesmo local da memória.
+func (c *Carro) andou() {
+  c.Name = "BMW"
+  fmt.Println(c.Name, "andou")
+}
+
+func main () {
+
+  carro := Carro {
+    Name: "Ka"
+  }
+
+  carro.andou() // BMW andou
+  fmt.Println(carro.Name) // Ka 
+
+  // A função Println apenas retorna o valordas variáveis dentro do escopo da função.
+
+}
+```
+
+Então, quando criamos um método (struct) e se vc quiser alterar o valor no endereço, tem que colocar o *Carro para alterar.
 
